@@ -25,7 +25,7 @@ public class Main extends JPanel implements KeyListener {
     private boolean allowKeyPress;
     private int score;
     private int highest_score;
-    String desktop = System.getProperty("user.home") + "desktop/";
+    String desktop = System.getProperty("cyrus.home") + "desktop/";
     String myFile = desktop + "filename.txt";
 
     public Main(){
@@ -59,7 +59,7 @@ public class Main extends JPanel implements KeyListener {
         //check if the snake bites itself.
         ArrayList<Node> snake_body = snake.getSnakeBody();
         Node head = snake_body.get(0);
-        for ( int i=1 ; i < snake_body.size() ; i++){
+        for ( int i = 1 ; i < snake_body.size() ; i++){
             if ( snake_body.get(i).x == head.x && snake_body.get(i).y == head.y){
                 allowKeyPress = false;
                 t.cancel();
@@ -93,14 +93,13 @@ public class Main extends JPanel implements KeyListener {
 
         if (direction.equals("Left")){
             snakeX -= CELL_SIZE;
+        } else if (direction.equals("Up")){
+            snakeY -= CELL_SIZE;
         } else if (direction.equals("Right")) {
             snakeX += CELL_SIZE;
-        }else if (direction.equals("Up")){
-            snakeY -= CELL_SIZE;
         } else if (direction.equals("Down")) {
             snakeY += CELL_SIZE;
         }
-        System.out.println(snakeX + ", " + snakeY);
 
         Node newHead = new Node(snakeX,snakeY);
 
@@ -138,15 +137,16 @@ public class Main extends JPanel implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         if (allowKeyPress){
-            if (e.getKeyCode() == 65 && !direction.equals("Right")){
+            if (e.getKeyCode() == 37 && !direction.equals("Right")){
                 direction = "Left";
-            } else if (e.getKeyCode() == 87 && !direction.equals("Down")) {
+            } else if (e.getKeyCode() == 38 && !direction.equals("Down")) {
                 direction = "Up";
-            } else if (e.getKeyCode() == 68 && !direction.equals("Left")) {
+            } else if (e.getKeyCode() == 39 && !direction.equals("Left")) {
                 direction = "Right";
-            } else if (e.getKeyCode() == 83 && !direction.equals("Up")) {
+            } else if (e.getKeyCode() == 40 && !direction.equals("Up")) {
                 direction = "Down";
             }
+            System.out.println(e.getKeyCode());
             allowKeyPress = false;
         }
     }
